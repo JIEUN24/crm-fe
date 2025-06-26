@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import {
+  PersonIcon,
+  BarChartIcon,
+  DashboardIcon,
+  EnvelopeOpenIcon,
+  LockClosedIcon,
+  GlobeIcon,
+  ChatBubbleIcon,
+  EyeOpenIcon,
+  EyeClosedIcon,
+} from '@radix-ui/react-icons';
 
 import { ROUTES } from '@/constants/routes';
 import { useAuthStore } from '@/store';
@@ -15,6 +26,7 @@ const Login = () => {
     false
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
@@ -87,7 +99,9 @@ const Login = () => {
         {/* 왼쪽 브랜딩 섹션 */}
         <div className="brand-section">
           <div className="logo-section">
-            <div className="logo-icon">🏢</div>
+            <div className="logo-icon">
+              <PersonIcon width={24} height={24} />
+            </div>
             <h1 className="brand-title">CRM 시스템</h1>
             <p className="brand-description">
               효율적인 고객 관계 관리로
@@ -97,15 +111,21 @@ const Login = () => {
           </div>
           <div className="features-list">
             <div className="feature-item">
-              <span className="feature-icon">📊</span>
+              <span className="feature-icon">
+                <DashboardIcon width={16} height={16} />
+              </span>
               <span className="feature-text">실시간 대시보드</span>
             </div>
             <div className="feature-item">
-              <span className="feature-icon">👥</span>
+              <span className="feature-icon">
+                <PersonIcon width={16} height={16} />
+              </span>
               <span className="feature-text">고객 관리</span>
             </div>
             <div className="feature-item">
-              <span className="feature-icon">📈</span>
+              <span className="feature-icon">
+                <BarChartIcon width={16} height={16} />
+              </span>
               <span className="feature-text">매출 분석</span>
             </div>
           </div>
@@ -126,7 +146,9 @@ const Login = () => {
                 이메일 <span className="required">*</span>
               </label>
               <div className="input-wrapper">
-                <span className="input-icon">📧</span>
+                <span className="input-icon">
+                  <EnvelopeOpenIcon width={18} height={18} />
+                </span>
                 <input
                   type="email"
                   id="email"
@@ -150,9 +172,11 @@ const Login = () => {
                 비밀번호 <span className="required">*</span>
               </label>
               <div className="input-wrapper">
-                <span className="input-icon">🔒</span>
+                <span className="input-icon">
+                  <LockClosedIcon width={18} height={18} />
+                </span>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   value={password}
                   onChange={(e) => {
@@ -164,6 +188,18 @@ const Login = () => {
                   placeholder="비밀번호를 입력하세요"
                   disabled={isLoading}
                 />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
+                >
+                  {showPassword ? (
+                    <EyeClosedIcon width={18} height={18} />
+                  ) : (
+                    <EyeOpenIcon width={18} height={18} />
+                  )}
+                </button>
               </div>
               {errors.password && (
                 <p className="error-message">{errors.password}</p>
@@ -221,17 +257,18 @@ const Login = () => {
               className="social-button"
               disabled={isLoading}
             >
-              <span className="social-icon">🌐</span>
+              <span className="social-icon">
+                <GlobeIcon width={18} height={18} />
+              </span>
               Google
             </button>
             <button
               type="button"
               onClick={() => handleSocialLogin('Kakao')}
-              className="social-button"
+              className="social-button kakao-button"
               disabled={isLoading}
             >
-              <span className="social-icon">💬</span>
-              Kakao
+              카카오 로그인
             </button>
           </div>
 

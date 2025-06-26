@@ -4,23 +4,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: $spacing-lg;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  height: 100vh;
+  padding: $spacing-md;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  font-family: $font-family-base;
+  overflow: hidden;
 }
 
 .login-container {
   background: white;
   border-radius: $border-radius-xl;
-  box-shadow: $shadow-lg;
-  padding: $spacing-2xl;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: $spacing-xl;
   width: 100%;
-  max-width: 900px;
+  max-width: 850px;
+  max-height: 90vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: $spacing-2xl;
+  gap: $spacing-xl;
   animation: fadeInUp 0.6s ease-out;
+  overflow: hidden;
   
   @keyframes fadeInUp {
     from {
@@ -34,74 +37,154 @@
   }
 }
 
-// 왼쪽 브랜딩 섹션
+// 왼쪽 브랜딩 섹션 - 더 예쁘게 디자인
 .brand-section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
-  padding: $spacing-xl;
-  background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($primary-hover, 0.1));
+  padding: $spacing-lg $spacing-lg 0 $spacing-lg; // 하단 패딩 제거
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(99, 102, 241, 0.08));
   border-radius: $border-radius-lg;
+  position: relative;
+  overflow: hidden;
+  
+  // SVG 배경 이미지 추가
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 16px;
+    bottom: -100px;
+    left: 0;
+    background: 
+      url('/src/assets/images/sales.svg') no-repeat right center;
+    background-size: contain;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  // 차트 스타일 배경 효과 추가 (SVG 위에 오버레이)
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: 
+      linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.01) 30%, rgba(59, 130, 246, 0.01) 35%, transparent 35%),
+      linear-gradient(-45deg, transparent 30%, rgba(99, 102, 241, 0.01) 30%, rgba(99, 102, 241, 0.01) 35%, transparent 35%),
+      radial-gradient(circle, rgba(59, 130, 246, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, 20px 20px;
+    background-position: 0 0, 0 0, bottom right;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
 .logo-section {
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  position: relative;
+  z-index: 2; // 배경 이미지 위에 표시
   
   .logo-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, $primary-color, $primary-hover);
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
     border-radius: $border-radius-lg;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: $spacing-lg;
-    font-size: 2rem;
+    margin-bottom: $spacing-md;
     color: white;
-    box-shadow: $shadow;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25);
+    position: relative;
+    
+    // 반짝이는 효과 추가
+    &::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #3b82f6, #6366f1, #3b82f6);
+      border-radius: $border-radius-lg;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    &:hover::after {
+      opacity: 1;
+    }
   }
   
   .brand-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: $gray-900;
-    margin: 0 0 $spacing-md;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 $spacing-sm;
     line-height: 1.2;
   }
   
   .brand-description {
     color: $gray-600;
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.5;
   }
 }
 
 .features-list {
   display: flex;
   flex-direction: column;
-  gap: $spacing-lg;
+  gap: $spacing-md;
+  position: relative;
+  z-index: 2; // 배경 이미지 위에 표시
+  padding-bottom: $spacing-lg; // 하단에 여백 추가하여 하단까지 배경이 닿도록
+  margin-top: 8.5rem;
   
   .feature-item {
     display: flex;
     align-items: center;
     gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: $border-radius;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    
+
+    
+    &:hover {
+      transform: translateX(5px);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(59, 130, 246, 0.15);
+    }
     
     .feature-icon {
-      font-size: 1.25rem;
-      width: 32px;
-      height: 32px;
-      background: white;
+      font-size: 1.125rem;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
       border-radius: $border-radius;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: $shadow;
+      color: white;
+              box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
     }
     
     .feature-text {
-      font-size: 1rem;
+      font-size: 0.875rem;
       font-weight: 500;
       color: $gray-700;
     }
@@ -113,15 +196,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: $spacing-xl;
+  padding: $spacing-lg; // 패딩 줄임
 }
 
 .form-header {
   text-align: center;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl; // 간격 줄임
   
   .form-title {
-    font-size: 2rem;
+    font-size: 1.75rem; // 크기 줄임
     font-weight: 700;
     color: $gray-900;
     margin: 0 0 $spacing-sm;
@@ -130,7 +213,7 @@
   
   .form-subtitle {
     color: $gray-600;
-    font-size: 1rem;
+    font-size: 0.875rem; // 크기 줄임
     margin: 0;
     line-height: 1.5;
   }
@@ -139,7 +222,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-lg;
+  gap: $spacing-md; // 간격 줄임
 }
 
 .form-group {
@@ -174,6 +257,11 @@
       transition: all $transition;
       box-sizing: border-box;
       
+      // 비밀번호 필드인 경우 오른쪽 패딩 추가
+      &[type="password"], &[type="text"]:has(+ .password-toggle) {
+        padding-right: 3rem;
+      }
+      
       &::placeholder {
         color: $gray-500;
       }
@@ -202,9 +290,36 @@
       top: 50%;
       transform: translateY(-50%);
       color: $gray-400;
-      font-size: 1.125rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       pointer-events: none;
       transition: color $transition;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: $gray-400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: color $transition;
+      
+      &:hover:not(:disabled) {
+        color: $gray-600;
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     }
     
     &:focus-within .input-icon {
@@ -235,7 +350,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: $spacing-sm 0;
+  margin: $spacing-xs 0; // 간격 줄임
   
   .remember-me {
     display: flex;
@@ -359,7 +474,7 @@
 .divider {
   position: relative;
   text-align: center;
-  margin: $spacing-xl 0;
+  margin: $spacing-md 0; // 간격 더 줄임
   
   &::before {
     content: '';
@@ -383,15 +498,15 @@
 
 .social-login {
   display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
+  flex-direction: row; // 가로 배치로 변경
+  gap: $spacing-sm;
   
   .social-button {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: $spacing-sm;
-    width: 100%;
+    flex: 1; // 동일한 너비로 분할
     padding: 0.75rem 1rem;
     border: 1px solid $gray-300;
     border-radius: $border-radius;
@@ -417,6 +532,48 @@
     
     .social-icon {
       font-size: 1.125rem;
+    }
+    
+    // 카카오 로그인 버튼 전용 스타일 (카카오 디자인 가이드 준수)
+    &.kakao-button {
+      background: #FEE500; // 카카오 노란색
+      border: 1px solid #FEE500;
+      color: rgba(0, 0, 0, 0.85); // 85% 불투명도의 검정색
+      font-weight: 600;
+      border-radius: 12px; // 12px radius
+      font-size: 1rem; // 더 큰 폰트
+      padding: 0.875rem 1.5rem; // 더 넉넉한 패딩
+      min-height: 48px; // 최소 높이 보장
+      position: relative;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif; // 시스템 기본 폰트
+      letter-spacing: -0.5px; // 한글에 맞는 자간 조정
+      
+      .kakao-icon {
+        color: #000000; // 심볼은 순수 검정색
+        font-size: 1.125rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+      }
+      
+      &:hover:not(:disabled) {
+        background: #FEE500; // 호버 시에도 같은 배경색 유지 (카카오 가이드 준수)
+        border-color: #FEE500;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(254, 229, 0, 0.3);
+      }
+      
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(254, 229, 0, 0.2);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(254, 229, 0, 0.3);
+      }
     }
   }
 }
@@ -565,7 +722,7 @@
 // 푸터 스타일 추가
 .footer {
   text-align: center;
-  margin-top: $spacing-xl;
+  margin-top: $spacing-md; // 더 위로 올림
   
   .footer-text {
     color: $gray-600;
