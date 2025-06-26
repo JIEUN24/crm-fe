@@ -1,0 +1,721 @@
+@use '@/styles/_variables.scss' as *;
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.login-container {
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-lg;
+  padding: $spacing-2xl;
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-2xl;
+  animation: fadeInUp 0.6s ease-out;
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// 왼쪽 브랜딩 섹션
+.brand-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($primary-hover, 0.1));
+  border-radius: $border-radius-lg;
+}
+
+.logo-section {
+  margin-bottom: $spacing-xl;
+  
+  .logo-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, $primary-color, $primary-hover);
+    border-radius: $border-radius-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $spacing-lg;
+    font-size: 2rem;
+    color: white;
+    box-shadow: $shadow;
+  }
+  
+  .brand-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0 0 $spacing-md;
+    line-height: 1.2;
+  }
+  
+  .brand-description {
+    color: $gray-600;
+    font-size: 1.125rem;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    
+    .feature-icon {
+      font-size: 1.25rem;
+      width: 32px;
+      height: 32px;
+      background: white;
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: $shadow;
+    }
+    
+    .feature-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $gray-700;
+    }
+  }
+}
+
+// 오른쪽 폼 섹션
+.form-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: $spacing-xl;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+  
+  .form-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0 0 $spacing-sm;
+    line-height: 1.25;
+  }
+  
+  .form-subtitle {
+    color: $gray-600;
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  
+  .label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-700;
+    margin: 0;
+    
+    .required {
+      color: $error-color;
+      margin-left: 2px;
+    }
+  }
+  
+  .input-wrapper {
+    position: relative;
+    
+    .input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 3rem;
+      border: 1px solid $gray-300;
+      border-radius: $border-radius;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: $gray-900;
+      background-color: white;
+      transition: all $transition;
+      box-sizing: border-box;
+      
+      &::placeholder {
+        color: $gray-500;
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+      
+      &.error {
+        border-color: $error-color;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+      }
+      
+      &:disabled {
+        background-color: $gray-100;
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $gray-400;
+      font-size: 1.125rem;
+      pointer-events: none;
+      transition: color $transition;
+    }
+    
+    &:focus-within .input-icon {
+      color: $primary-color;
+    }
+  }
+  
+  .error-message {
+    font-size: 0.75rem;
+    color: $error-color;
+    margin: 0;
+    animation: slideDown 0.3s ease-out;
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: $spacing-sm 0;
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    
+    .checkbox {
+      width: 16px;
+      height: 16px;
+      background: white;
+      border: 2px solid $gray-300;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all $transition;
+      
+      &:hover {
+        border-color: $primary-color;
+      }
+      
+      &[data-state="checked"] {
+        background: $primary-color;
+        border-color: $primary-color;
+        color: white;
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+    }
+    
+    .checkbox-label {
+      font-size: 0.875rem;
+      color: $gray-600;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+  
+  .forgot-password {
+    font-size: 0.875rem;
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color $transition;
+    
+    &:hover {
+      color: $primary-hover;
+      text-decoration: underline;
+    }
+  }
+}
+
+.login-button {
+  position: relative;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, $primary-color, $primary-hover);
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  overflow: hidden;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $primary-hover, $primary-color);
+    transform: translateY(-1px);
+    box-shadow: $shadow-lg;
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .button-text {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+  
+  &.loading {
+    .button-text {
+      opacity: 0.8;
+    }
+  }
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: $spacing-xl 0;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $gray-300;
+  }
+  
+  .divider-text {
+    background: white;
+    padding: 0 $spacing-md;
+    color: $gray-500;
+    font-size: 0.875rem;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  
+  .social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius;
+    background: white;
+    color: $gray-700;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all $transition;
+    
+    &:hover:not(:disabled) {
+      border-color: $gray-400;
+      background: $gray-50;
+      transform: translateY(-1px);
+      box-shadow: $shadow;
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .social-icon {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: $spacing-xl;
+  
+  .signup-text {
+    color: $gray-600;
+    font-size: 0.875rem;
+    
+    .signup-button {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 600;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color $transition;
+      
+      &:hover {
+        color: $primary-hover;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.forgot-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $spacing-lg;
+}
+
+.forgot-dialog-content {
+  background: white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: $shadow-xl;
+  animation: fadeInScale 0.3s ease-out;
+  
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  .dialog-header {
+    margin-bottom: $spacing-lg;
+    
+    .dialog-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $gray-900;
+      margin: 0 0 $spacing-sm;
+    }
+    
+    .dialog-description {
+      color: $gray-600;
+      font-size: 0.875rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+  
+  .dialog-form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    
+    .dialog-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid $gray-300;
+      border-radius: $border-radius;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: $gray-900;
+      background-color: white;
+      transition: all $transition;
+      box-sizing: border-box;
+      
+      &::placeholder {
+        color: $gray-500;
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+    }
+  }
+  
+  .dialog-actions {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+    
+    .dialog-button {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: $border-radius;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all $transition;
+      border: 1px solid transparent;
+      
+      &.primary {
+        background: $primary-color;
+        color: white;
+        
+        &:hover {
+          background: $primary-hover;
+        }
+      }
+      
+      &.secondary {
+        background: transparent;
+        color: $gray-700;
+        border-color: $gray-300;
+        
+        &:hover {
+          background: $gray-50;
+          border-color: $gray-400;
+        }
+      }
+    }
+  }
+}
+
+// 푸터 스타일 추가
+.footer {
+  text-align: center;
+  margin-top: $spacing-xl;
+  
+  .footer-text {
+    color: $gray-600;
+    font-size: 0.875rem;
+    margin: 0;
+    
+    .signup-link {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color $transition;
+      
+      &:hover {
+        color: $primary-hover;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// 다이얼로그 스타일 추가  
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.dialog-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: $shadow-xl;
+  z-index: 1001;
+}
+
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $gray-900;
+  margin: 0 0 $spacing-sm;
+}
+
+// 반응형 디자인
+@media (max-width: 768px) {
+  .login-container {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    gap: $spacing-xl;
+  }
+  
+  .brand-section {
+    order: 2;
+    padding: $spacing-lg;
+    
+    .features-list {
+      flex-direction: row;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: $spacing-md;
+      
+      .feature-item {
+        flex-direction: column;
+        text-align: center;
+        gap: $spacing-sm;
+        
+        .feature-text {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+  
+  .form-section {
+    order: 1;
+    padding: $spacing-lg;
+  }
+  
+  .logo-section {
+    text-align: center;
+    
+    .brand-title {
+      font-size: 2rem;
+    }
+    
+    .brand-description {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: $spacing-md;
+  }
+  
+  .login-container {
+    padding: $spacing-lg;
+  }
+  
+  .brand-section,
+  .form-section {
+    padding: $spacing-md;
+  }
+  
+  .logo-section {
+    .brand-title {
+      font-size: 1.75rem;
+    }
+    
+    .brand-description {
+      font-size: 0.875rem;
+    }
+  }
+  
+  .form-header {
+    .form-title {
+      font-size: 1.5rem;
+    }
+    
+    .form-subtitle {
+      font-size: 0.875rem;
+    }
+  }
+  
+  .remember-forgot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-sm;
+    
+    .remember-me {
+      justify-content: flex-start;
+    }
+    
+    .forgot-password {
+      text-align: left;
+    }
+  }
+  
+  .features-list {
+    .feature-item {
+      .feature-text {
+        font-size: 0.75rem;
+      }
+    }
+  }
+} 
