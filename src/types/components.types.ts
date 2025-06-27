@@ -1,7 +1,7 @@
 export interface NavigationItem {
   name: string;
   href: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 export interface DialogProps {
