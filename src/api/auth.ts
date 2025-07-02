@@ -13,11 +13,28 @@ const api = axios.create({
   },
 });
 
-// 인증이 필요한 요청에 토큰 자동 추가하는 인터셉터
+// 인증이 필요한 API에만 토큰을 자동으로 추가하는 인터셉터
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  // 인증이 필요한 엔드포인트들
+  const authRequiredPaths = [
+    '/auth/logout',
+    '/auth/profile',
+    '/auth/token-info',
+  ];
+
+  // 현재 요청이 인증이 필요한지 확인
+  const needsAuth = authRequiredPaths.some((path) =>
+    config.url?.includes(path)
+  );
+
+  if (needsAuth) {
+    const authData = localStorage.getItem('auth-storage');
+    if (authData) {
+      const { state } = JSON.parse(authData);
+      if (state.token) {
+        config.headers.Authorization = `Bearer ${state.token}`;
+      }
+    }
   }
   return config;
 });

@@ -1,24 +1,52 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
-import { User } from '@/types/auth.types';
+import { AuthState as AuthStateType, User } from '@/types/auth.types';
 
 // 사용자 인증 관련 상태
-interface AuthState {
-  isAuthenticated: boolean;
-  user: User | null;
-  login: (user: User) => void;
+interface AuthStore extends AuthStateType {
+  setAuth: (user: User, token: string, refreshToken: string) => void;
   logout: () => void;
+  setToken: (token: string) => void;
+  clearAuth: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<AuthStore>()(
   devtools(
-    (set) => ({
-      isAuthenticated: false,
-      user: null,
-      login: (user) => set({ isAuthenticated: true, user }),
-      logout: () => set({ isAuthenticated: false, user: null }),
-    }),
+    persist(
+      (set) => ({
+        isAuthenticated: false,
+        user: null,
+        token: undefined,
+        refreshToken: undefined,
+
+        setAuth: (user, token, refreshToken) =>
+          set({
+            isAuthenticated: true,
+            user,
+            token,
+            refreshToken,
+          }),
+        logout: () =>
+          set({
+            isAuthenticated: false,
+            user: null,
+            token: undefined,
+            refreshToken: undefined,
+          }),
+        setToken: (token) => set({ token }),
+        clearAuth: () =>
+          set({
+            isAuthenticated: false,
+            user: null,
+            token: undefined,
+            refreshToken: undefined,
+          }),
+      }),
+      {
+        name: 'auth-storage',
+      }
+    ),
     {
       name: 'auth-store',
     }
