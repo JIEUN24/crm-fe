@@ -1,0 +1,249 @@
+@use '@/styles/_variables.scss' as *;
+
+.samples-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  background: white;
+  min-height: 100vh;
+}
+
+.samples-header {
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $gray-200;
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0 0 $spacing-sm;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  p {
+    font-size: 1.125rem;
+    color: $gray-600;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+.component-section {
+  margin-bottom: $spacing-xxl;
+  
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: $gray-900;
+    margin: 0 0 $spacing-lg;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid $primary-color;
+    display: inline-block;
+  }
+}
+
+.sample-group {
+  margin-bottom: $spacing-xl;
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin: 0 0 $spacing-md;
+  }
+}
+
+// Grid layouts for different components
+.button-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  
+  .btn {
+    min-width: 120px;
+  }
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+// Code examples
+.code-example {
+  background: $gray-50;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  margin-top: $spacing-lg;
+  
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin: 0 0 $spacing-sm;
+  }
+  
+  pre {
+    background: $gray-900;
+    color: #e2e8f0;
+    padding: $spacing-md;
+    border-radius: $border-radius;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    overflow-x: auto;
+    border: 1px solid #374151;
+    
+    // Syntax highlighting colors
+    .keyword {
+      color: #f59e0b;
+    }
+    
+    .string {
+      color: #10b981;
+    }
+    
+    .component {
+      color: #3b82f6;
+    }
+  }
+}
+
+// Form sample styling
+.form-sample {
+  max-width: 400px;
+  padding: $spacing-xl;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+  .form-group {
+    margin-bottom: $spacing-lg;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+    margin-top: $spacing-xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $gray-200;
+  }
+}
+
+// Dialog content styling
+.dialog-content-sample {
+  p {
+    margin: 0 0 $spacing-md;
+    line-height: 1.6;
+    color: $gray-700;
+    
+    &:last-of-type {
+      margin-bottom: $spacing-lg;
+    }
+  }
+  
+  .dialog-actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: flex-end;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $gray-200;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .samples-page {
+    padding: $spacing-lg;
+  }
+  
+  .samples-header {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+  
+  .button-grid {
+    flex-direction: column;
+    
+    .btn {
+      min-width: auto;
+    }
+  }
+  
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-sample {
+    padding: $spacing-lg;
+    
+    .form-actions {
+      flex-direction: column;
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Hover effects for interactive elements
+.sample-group:hover {
+  .code-example {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 1px rgba($primary-color, 0.1);
+  }
+}
+
+// Section dividers
+.component-section:not(:last-child) {
+  padding-bottom: $spacing-xl;
+  border-bottom: 1px solid $gray-100;
+}
+
+// Custom scrollbar for code blocks
+.code-example pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.code-example pre::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 4px;
+}
+
+.code-example pre::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 4px;
+}
+
+.code-example pre::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+} 
