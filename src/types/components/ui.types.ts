@@ -35,3 +35,13 @@ export interface InputProps {
   id?: string;
   className?: string;
 }
+
+export interface ChipProps extends React.HTMLAttributes<HTMLSpanElement> {
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+  size?: 'sm' | 'md' | 'lg';
+  color?: 'purple' | 'green' | 'blue' | 'gray' | 'orange' | 'red';
+  removable?: boolean;
+  onRemove?: () => void;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+}

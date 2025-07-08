@@ -83,6 +83,65 @@
   margin-bottom: $spacing-lg;
 }
 
+.chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  align-items: center;
+}
+
+// New component grids
+.search-samples {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+.pagination-samples {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  
+  .pagination-sample-item {
+    padding: $spacing-lg;
+    border: 1px solid $gray-200;
+    border-radius: $border-radius;
+    background: $gray-50;
+    
+    p {
+      margin: 0 0 $spacing-md;
+      font-weight: 500;
+      color: $gray-700;
+    }
+  }
+}
+
+.action-samples {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  
+  .action-sample-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    padding: $spacing-md $spacing-lg;
+    border: 1px solid $gray-200;
+    border-radius: $border-radius;
+    background: white;
+    
+    span {
+      min-width: 120px;
+      font-weight: 500;
+      color: $gray-700;
+    }
+  }
+}
+
 // Code examples
 .code-example {
   background: $gray-50;
@@ -148,6 +207,84 @@
   }
 }
 
+// Data management sample styling
+.data-management-sample {
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  
+  .data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-lg;
+    border-bottom: 1px solid $gray-200;
+    background: $gray-50;
+    
+    .data-title {
+      h4 {
+        margin: 0 0 4px;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: $gray-900;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: $gray-600;
+      }
+    }
+  }
+  
+  .data-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+    border-bottom: 1px solid $gray-200;
+    
+    .filter-controls {
+      display: flex;
+      gap: $spacing-sm;
+    }
+  }
+  
+  .sample-table {
+    .table-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 120px 120px;
+      gap: $spacing-md;
+      padding: $spacing-md $spacing-lg;
+      background: $gray-50;
+      border-bottom: 1px solid $gray-200;
+      font-weight: 600;
+      color: $gray-700;
+      font-size: 0.875rem;
+    }
+    
+    .table-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 120px 120px;
+      gap: $spacing-md;
+      padding: $spacing-md $spacing-lg;
+      border-bottom: 1px solid $gray-100;
+      align-items: center;
+      
+      &:hover {
+        background: $gray-50;
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
 // Dialog content styling
 .dialog-content-sample {
   p {
@@ -200,6 +337,76 @@
   
   .card-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .data-management-sample {
+    .data-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-md;
+    }
+    
+    .data-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $spacing-md;
+      
+      .filter-controls {
+        justify-content: flex-start;
+      }
+    }
+    
+    .sample-table {
+      .table-header,
+      .table-row {
+        grid-template-columns: 1fr;
+        gap: $spacing-xs;
+        text-align: left;
+      }
+      
+      .table-header {
+        display: none; // Hide headers on mobile
+      }
+      
+      .table-row {
+        padding: $spacing-md;
+        
+        > div {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: $spacing-xs;
+          
+          &:before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: $gray-700;
+            font-size: 0.875rem;
+          }
+          
+          &:first-child:before {
+            content: "고객명: ";
+          }
+          
+          &:nth-child(2):before {
+            content: "이메일: ";
+          }
+          
+          &:nth-child(3):before {
+            content: "상태: ";
+          }
+          
+          &:last-child:before {
+            content: "액션: ";
+          }
+          
+          &:last-child {
+            margin-bottom: 0;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
   }
   
   .form-sample {
