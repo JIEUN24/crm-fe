@@ -10,6 +10,7 @@ import {
   BellIcon,
   MagnifyingGlassIcon,
   ChevronDownIcon,
+  ComponentInstanceIcon,
 } from '@radix-ui/react-icons';
 
 import { ROUTES } from '@/constants/routes';
@@ -46,10 +47,16 @@ const Layout = () => {
       href: ROUTES.REPORTS,
       icon: <BarChartIcon width={20} height={20} />,
     },
+
     {
       name: '설정',
       href: ROUTES.SETTINGS,
       icon: <GearIcon width={20} height={20} />,
+    },
+    {
+      name: '샘플',
+      href: ROUTES.SAMPLES,
+      icon: <ComponentInstanceIcon width={20} height={20} />,
     },
   ];
 
