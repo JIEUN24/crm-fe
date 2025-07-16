@@ -18,6 +18,7 @@ import { ROUTES } from '@/constants/routes';
 import { useAuthStore } from '@/store';
 
 import '@/pages/auth/Login.scss';
+import { login } from '@/api/auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -34,7 +35,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuthStore();
+  const { setAuth } = useAuthStore();
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
@@ -63,14 +64,9 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // 실제 로그인 API 호출 시뮬레이션
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      login({
-        id: '1',
-        email,
-        name: email.split('@')[0] || '사용자',
-      });
+      const response = await login({ email, password });
+      const { user, access_token, refresh_token } = response.data;
+      setAuth(user, access_token, refresh_token);
 
       // 이전 페이지가 있으면 그곳으로, 없으면 대시보드로 이동
       const from = (location.state as any)?.from?.pathname || ROUTES.DASHBOARD;
