@@ -3,11 +3,12 @@ import {
   LoginCredentials,
   LogoutResponse,
   RegisterCredentials,
+  ResetPasswordResponse,
 } from '@/types/auth.types';
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhose:8080',
+  baseURL: 'http://localhose:3000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -58,5 +59,13 @@ export const login = async (
 // 로그아웃
 export const logout = async (): Promise<LogoutResponse> => {
   const response = await api.post('/auth/logout');
+  return response.data;
+};
+
+// 비밀번호 재설정 요청
+export const resetPassword = async (
+  email: string
+): Promise<ResetPasswordResponse> => {
+  const response = await api.post('/auth/reset-password', { email });
   return response.data;
 };
