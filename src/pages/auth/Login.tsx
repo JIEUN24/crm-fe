@@ -18,7 +18,7 @@ import { ROUTES } from '@/constants/routes';
 import { useAuthStore } from '@/store';
 
 import '@/pages/auth/Login.scss';
-import { login } from '@/api/auth';
+import { login, resetPassword } from '@/api/auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -83,10 +83,24 @@ const Login = () => {
     // 소셜 로그인 구현
   };
 
-  const handleForgotPassword = () => {
-    setShowForgotDialog(false);
-    console.log('비밀번호 재설정 이메일 전송');
-    // 비밀번호 재설정 로직 구현
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setErrors({ email: '이메일을 입력해주세요.' });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await resetPassword(email);
+      setShowForgotDialog(false);
+
+      // 성공 메세지
+      alert('비밀번호 재설정 이메일이 발송되었습니다.');
+    } catch (error) {
+      alert('비밀번호 재설정 요청에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
