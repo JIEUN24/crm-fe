@@ -17,12 +17,8 @@ const CustomDialog = ({
         <Dialog.Overlay className="dialog-overlay" />
         <Dialog.Content className="dialog-content">
           <Dialog.Title className="dialog-title">{title}</Dialog.Title>
+
           <div className="dialog-body">{children}</div>
-          <Dialog.Close asChild>
-            <button className="dialog-close" aria-label="Close">
-              ×
-            </button>
-          </Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

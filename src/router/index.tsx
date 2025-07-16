@@ -7,20 +7,17 @@ import Dashboard from '@/pages/dashboard/Dashboard';
 import Customers from '@/pages/customers/Customers';
 import Reports from '@/pages/reports/Reports';
 import Settings from '@/pages/settings/Settings';
+import Samples from '@/pages/samples/Samples';
 import Login from '@/pages/auth/Login';
 import NotFound from '@/pages/NotFound';
 
 export const router = createBrowserRouter([
   {
-    path: ROUTES.HOME,
-    element: <Login />,
-  },
-  {
     path: ROUTES.LOGIN,
     element: <Login />,
   },
   {
-    path: ROUTES.DASHBOARD,
+    path: ROUTES.HOME,
     element: (
       <ProtectedRoute>
         <Layout />
@@ -28,20 +25,24 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        index: true,
+        path: ROUTES.DASHBOARD,
         element: <Dashboard />,
       },
       {
-        path: 'customers',
+        path: ROUTES.CUSTOMERS,
         element: <Customers />,
       },
       {
-        path: 'reports',
+        path: ROUTES.REPORTS,
         element: <Reports />,
       },
       {
-        path: 'settings',
+        path: ROUTES.SETTINGS,
         element: <Settings />,
+      },
+      {
+        path: ROUTES.SAMPLES,
+        element: <Samples />,
       },
     ],
   },
