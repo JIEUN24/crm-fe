@@ -71,8 +71,16 @@ const Login = () => {
       // 이전 페이지가 있으면 그곳으로, 없으면 대시보드로 이동
       const from = (location.state as any)?.from?.pathname || ROUTES.DASHBOARD;
       navigate(from, { replace: true });
-    } catch (error) {
-      setErrors({ email: '로그인에 실패했습니다. 다시 시도해주세요.' });
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        setErrors({ email: '이메일 또는 비밀번호가 잘못되었습니다.' });
+      } else if (error.response?.status === 429) {
+        setErrors({
+          email: '너무 많은 시도입니다. 잠시 후 다시 시도해주세요.',
+        });
+      } else {
+        setErrors({ email: '로그인에 실패했습니다. 다시 시도해주세요.' });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -94,10 +102,14 @@ const Login = () => {
       await resetPassword(email);
       setShowForgotDialog(false);
 
-      // 성공 메세지
-      alert('비밀번호 재설정 이메일이 발송되었습니다.');
-    } catch (error) {
-      alert('비밀번호 재설정 요청에 실패했습니다. 다시 시도해주세요.');
+      // 성공 메세지(추후에 UI 수정)
+      setErrors({ email: '✅ 비밀번호 재설정 이메일이 발송되었습니다.' });
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        setErrors({ email: '등록되지 않은 이메일입니다.' });
+      } else {
+        setErrors({ email: '비밀번호 재설정 요청에 실패했습니다.' });
+      }
     } finally {
       setIsLoading(false);
     }
