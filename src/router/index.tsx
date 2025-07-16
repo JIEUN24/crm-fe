@@ -10,11 +10,16 @@ import Settings from '@/pages/settings/Settings';
 import Samples from '@/pages/samples/Samples';
 import Login from '@/pages/auth/Login';
 import NotFound from '@/pages/NotFound';
+import Register from '@/pages/auth/Register';
 
 export const router = createBrowserRouter([
   {
     path: ROUTES.LOGIN,
     element: <Login />,
+  },
+  {
+    path: ROUTES.REGISTER,
+    element: <Register />,
   },
   {
     path: ROUTES.HOME,
