@@ -3,8 +3,6 @@ import { ROUTES } from '@/constants/routes';
 import { useAuthStore } from '@/store';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import {
-  BarChartIcon,
-  DashboardIcon,
   EnvelopeOpenIcon,
   EyeClosedIcon,
   EyeOpenIcon,
@@ -15,7 +13,11 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Register = () => {
+type RegisterProps = {
+  setShowRegister: (value: boolean) => void;
+};
+
+export const Register = ({ setShowRegister }: RegisterProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -112,266 +114,229 @@ export const Register = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
-        {/* 왼쪽 브랜딩 섹션 */}
-        <div className="brand-section">
-          <div className="logo-section">
-            <div className="logo-icon">
-              <PersonIcon width={24} height={24} />
-            </div>
-            <h1 className="brand-title">CRM 시스템</h1>
-            <p className="brand-description">
-              효율적인 고객 관계 관리로
-              <br />
-              비즈니스 성장을 가속화하세요
-            </p>
+    <div className="form-section">
+      <div className="form-header">
+        <h2 className="form-title">회원가입</h2>
+        <p className="form-subtitle">새 계정을 생성하여 시작하세요</p>
+      </div>
+
+      {/* 회원가입 폼 */}
+      <form onSubmit={handleSubmit} className="register-form">
+        {/* 이름 필드 */}
+        <div className="form-group">
+          <label htmlFor="name" className="label">
+            이름 <span className="required">*</span>
+          </label>
+          <div className="input-wrapper">
+            <span className="input-icon">
+              <PersonIcon width={18} height={18} />
+            </span>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (errors.name)
+                  setErrors((prev) => ({ ...prev, name: undefined }));
+              }}
+              className={`input ${errors.name ? 'error' : ''}`}
+              placeholder="이름을 입력하세요"
+              disabled={isLoading}
+            />
           </div>
-          <div className="features-list">
-            <div className="feature-item">
-              <span className="feature-icon">
-                <DashboardIcon width={16} height={16} />
-              </span>
-              <span className="feature-text">실시간 대시보드</span>
-            </div>
-            <div className="feature-item">
-              <span className="feature-icon">
-                <PersonIcon width={16} height={16} />
-              </span>
-              <span className="feature-text">고객 관리</span>
-            </div>
-            <div className="feature-item">
-              <span className="feature-icon">
-                <BarChartIcon width={16} height={16} />
-              </span>
-              <span className="feature-text">매출 분석</span>
-            </div>
-          </div>
+          {errors.name && <p className="error-message">{errors.name}</p>}
         </div>
 
-        {/* 오른쪽 회원가입 폼 섹션 */}
-        <div className="form-section">
-          <div className="form-header">
-            <h2 className="form-title">회원가입</h2>
-            <p className="form-subtitle">새 계정을 생성하여 시작하세요</p>
-          </div>
-
-          {/* 회원가입 폼 */}
-          <form onSubmit={handleSubmit} className="register-form">
-            {/* 이름 필드 */}
-            <div className="form-group">
-              <label htmlFor="name" className="label">
-                이름 <span className="required">*</span>
-              </label>
-              <div className="input-wrapper">
-                <span className="input-icon">
-                  <PersonIcon width={18} height={18} />
-                </span>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                    if (errors.name)
-                      setErrors((prev) => ({ ...prev, name: undefined }));
-                  }}
-                  className={`input ${errors.name ? 'error' : ''}`}
-                  placeholder="이름을 입력하세요"
-                  disabled={isLoading}
-                />
-              </div>
-              {errors.name && <p className="error-message">{errors.name}</p>}
-            </div>
-
-            {/* 이메일 필드 */}
-            <div className="form-group">
-              <label htmlFor="email" className="label">
-                이메일 <span className="required">*</span>
-              </label>
-              <div className="input-wrapper">
-                <span className="input-icon">
-                  <EnvelopeOpenIcon width={18} height={18} />
-                </span>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email)
-                      setErrors((prev) => ({ ...prev, email: undefined }));
-                  }}
-                  className={`input ${errors.email ? 'error' : ''}`}
-                  placeholder="your@email.com"
-                  disabled={isLoading}
-                />
-              </div>
-              {errors.email && <p className="error-message">{errors.email}</p>}
-            </div>
-
-            {/* 비밀번호 필드 */}
-            <div className="form-group">
-              <label htmlFor="password" className="label">
-                비밀번호 <span className="required">*</span>
-              </label>
-              <div className="input-wrapper">
-                <span className="input-icon">
-                  <LockClosedIcon width={18} height={18} />
-                </span>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errors.password)
-                      setErrors((prev) => ({ ...prev, password: undefined }));
-                  }}
-                  className={`input ${errors.password ? 'error' : ''}`}
-                  placeholder="비밀번호를 입력하세요"
-                  disabled={isLoading}
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  disabled={isLoading}
-                >
-                  {showPassword ? (
-                    <EyeClosedIcon width={18} height={18} />
-                  ) : (
-                    <EyeOpenIcon width={18} height={18} />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="error-message">{errors.password}</p>
-              )}
-            </div>
-
-            {/* 비밀번호 확인 필드 */}
-            <div className="form-group">
-              <label htmlFor="confirmPassword" className="label">
-                비밀번호 확인 <span className="required">*</span>
-              </label>
-              <div className="input-wrapper">
-                <span className="input-icon">
-                  <LockClosedIcon width={18} height={18} />
-                </span>
-                <input
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                    if (errors.confirmPassword)
-                      setErrors((prev) => ({
-                        ...prev,
-                        confirmPassword: undefined,
-                      }));
-                  }}
-                  className={`input ${errors.confirmPassword ? 'error' : ''}`}
-                  placeholder="비밀번호를 다시 입력하세요"
-                  disabled={isLoading}
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  disabled={isLoading}
-                >
-                  {showConfirmPassword ? (
-                    <EyeClosedIcon width={18} height={18} />
-                  ) : (
-                    <EyeOpenIcon width={18} height={18} />
-                  )}
-                </button>
-              </div>
-              {errors.confirmPassword && (
-                <p className="error-message">{errors.confirmPassword}</p>
-              )}
-            </div>
-
-            {/* 이용약관 동의 */}
-            <div className="form-group">
-              <div className="remember-forgot">
-                <div className="remember-me">
-                  <Checkbox.Root
-                    checked={agreeTerms}
-                    onCheckedChange={setAgreeTerms}
-                    className="checkbox"
-                    id="terms"
-                  >
-                    <Checkbox.Indicator>✓</Checkbox.Indicator>
-                  </Checkbox.Root>
-                  <label htmlFor="terms" className="checkbox-label">
-                    <span className="required">*</span>
-                    <a href="#" className="terms-link">
-                      이용약관
-                    </a>{' '}
-                    및{' '}
-                    <a href="#" className="terms-link">
-                      개인정보 처리방침
-                    </a>
-                    에 동의합니다
-                  </label>
-                </div>
-              </div>
-              {errors.terms && <p className="error-message">{errors.terms}</p>}
-            </div>
-
-            {/* 회원가입 버튼 */}
-            <button
-              type="submit"
+        {/* 이메일 필드 */}
+        <div className="form-group">
+          <label htmlFor="email" className="label">
+            이메일 <span className="required">*</span>
+          </label>
+          <div className="input-wrapper">
+            <span className="input-icon">
+              <EnvelopeOpenIcon width={18} height={18} />
+            </span>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors.email)
+                  setErrors((prev) => ({ ...prev, email: undefined }));
+              }}
+              className={`input ${errors.email ? 'error' : ''}`}
+              placeholder="your@email.com"
               disabled={isLoading}
-              className={`login-button ${isLoading ? 'loading' : ''}`}
-            >
-              <span className="button-text">
-                {isLoading ? '가입 중...' : '회원가입'}
-              </span>
-              {isLoading && <div className="spinner"></div>}
-            </button>
-          </form>
-
-          {/* 구분선 */}
-          <div className="divider">
-            <span className="divider-text">또는</span>
+            />
           </div>
-
-          {/* 소셜 회원가입 */}
-          <div className="social-login">
-            <button
-              type="button"
-              onClick={() => handleSocialRegister('Google')}
-              className="social-button"
-              disabled={isLoading}
-            >
-              <span className="social-icon">
-                <GlobeIcon width={18} height={18} />
-              </span>
-              Google로 가입
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSocialRegister('Kakao')}
-              className="social-button kakao-button"
-              disabled={isLoading}
-            >
-              카카오로 가입
-            </button>
-          </div>
-
-          {/* 푸터 */}
-          <div className="footer">
-            <p className="footer-text">
-              이미 계정이 있으신가요?{' '}
-              <a href="/login" className="login-link">
-                로그인
-              </a>
-            </p>
-          </div>
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
+
+        {/* 비밀번호 필드 */}
+        <div className="form-group">
+          <label htmlFor="password" className="label">
+            비밀번호 <span className="required">*</span>
+          </label>
+          <div className="input-wrapper">
+            <span className="input-icon">
+              <LockClosedIcon width={18} height={18} />
+            </span>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (errors.password)
+                  setErrors((prev) => ({ ...prev, password: undefined }));
+              }}
+              className={`input ${errors.password ? 'error' : ''}`}
+              placeholder="비밀번호를 입력하세요"
+              disabled={isLoading}
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+              disabled={isLoading}
+            >
+              {showPassword ? (
+                <EyeClosedIcon width={18} height={18} />
+              ) : (
+                <EyeOpenIcon width={18} height={18} />
+              )}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="error-message">{errors.password}</p>
+          )}
+        </div>
+
+        {/* 비밀번호 확인 필드 */}
+        <div className="form-group">
+          <label htmlFor="confirmPassword" className="label">
+            비밀번호 확인 <span className="required">*</span>
+          </label>
+          <div className="input-wrapper">
+            <span className="input-icon">
+              <LockClosedIcon width={18} height={18} />
+            </span>
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                if (errors.confirmPassword)
+                  setErrors((prev) => ({
+                    ...prev,
+                    confirmPassword: undefined,
+                  }));
+              }}
+              className={`input ${errors.confirmPassword ? 'error' : ''}`}
+              placeholder="비밀번호를 다시 입력하세요"
+              disabled={isLoading}
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              disabled={isLoading}
+            >
+              {showConfirmPassword ? (
+                <EyeClosedIcon width={18} height={18} />
+              ) : (
+                <EyeOpenIcon width={18} height={18} />
+              )}
+            </button>
+          </div>
+          {errors.confirmPassword && (
+            <p className="error-message">{errors.confirmPassword}</p>
+          )}
+        </div>
+
+        {/* 이용약관 동의 */}
+        <div className="form-group">
+          <div className="remember-forgot">
+            <div className="remember-me">
+              <Checkbox.Root
+                checked={agreeTerms}
+                onCheckedChange={setAgreeTerms}
+                className="checkbox"
+                id="terms"
+              >
+                <Checkbox.Indicator>✓</Checkbox.Indicator>
+              </Checkbox.Root>
+              <label htmlFor="terms" className="checkbox-label">
+                <span className="required">*</span>
+                <a href="#" className="terms-link">
+                  이용약관
+                </a>{' '}
+                및{' '}
+                <a href="#" className="terms-link">
+                  개인정보 처리방침
+                </a>
+                에 동의합니다
+              </label>
+            </div>
+          </div>
+          {errors.terms && <p className="error-message">{errors.terms}</p>}
+        </div>
+
+        {/* 회원가입 버튼 */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`login-button ${isLoading ? 'loading' : ''}`}
+        >
+          <span className="button-text">
+            {isLoading ? '가입 중...' : '회원가입'}
+          </span>
+          {isLoading && <div className="spinner"></div>}
+        </button>
+      </form>
+
+      {/* 구분선 */}
+      <div className="divider">
+        <span className="divider-text">또는</span>
+      </div>
+
+      {/* 소셜 회원가입 */}
+      <div className="social-login">
+        <button
+          type="button"
+          onClick={() => handleSocialRegister('Google')}
+          className="social-button"
+          disabled={isLoading}
+        >
+          <span className="social-icon">
+            <GlobeIcon width={18} height={18} />
+          </span>
+          Google로 가입
+        </button>
+        <button
+          type="button"
+          onClick={() => handleSocialRegister('Kakao')}
+          className="social-button kakao-button"
+          disabled={isLoading}
+        >
+          카카오로 가입
+        </button>
+      </div>
+
+      {/* 푸터 */}
+      <div className="footer">
+        <p className="footer-text">
+          이미 계정이 있으신가요?{' '}
+          <button
+            onClick={() => setShowRegister(false)}
+            className="signup-link"
+          >
+            로그인
+          </button>
+        </p>
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import {
   EnvelopeOpenIcon,
   LockClosedIcon,
   GlobeIcon,
-  ChatBubbleIcon,
   EyeOpenIcon,
   EyeClosedIcon,
 } from '@radix-ui/react-icons';
@@ -19,6 +18,7 @@ import { useAuthStore } from '@/store';
 
 import '@/pages/auth/Login.scss';
 import { login, resetPassword } from '@/api/auth';
+import Register from './Register';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -32,6 +32,7 @@ const Login = () => {
     {}
   );
   const [showForgotDialog, setShowForgotDialog] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -154,156 +155,165 @@ const Login = () => {
         </div>
 
         {/* 오른쪽 로그인 폼 섹션 */}
-        <div className="form-section">
-          <div className="form-header">
-            <h2 className="form-title">로그인</h2>
-            <p className="form-subtitle">계정에 로그인하여 시작하세요</p>
-          </div>
-
-          {/* 로그인 폼 */}
-          <form onSubmit={handleSubmit} className="login-form">
-            {/* 이메일 필드 */}
-            <div className="form-group">
-              <label htmlFor="email" className="label">
-                이메일 <span className="required">*</span>
-              </label>
-              <div className="input-wrapper">
-                <span className="input-icon">
-                  <EnvelopeOpenIcon width={18} height={18} />
-                </span>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email)
-                      setErrors((prev) => ({ ...prev, email: undefined }));
-                  }}
-                  className={`input ${errors.email ? 'error' : ''}`}
-                  placeholder="your@email.com"
-                  disabled={isLoading}
-                />
-              </div>
-              {errors.email && <p className="error-message">{errors.email}</p>}
+        {showRegister ? (
+          <Register setShowRegister={setShowRegister} />
+        ) : (
+          <div className="form-section">
+            <div className="form-header">
+              <h2 className="form-title">로그인</h2>
+              <p className="form-subtitle">계정에 로그인하여 시작하세요</p>
             </div>
 
-            {/* 비밀번호 필드 */}
-            <div className="form-group">
-              <label htmlFor="password" className="label">
-                비밀번호 <span className="required">*</span>
-              </label>
-              <div className="input-wrapper">
-                <span className="input-icon">
-                  <LockClosedIcon width={18} height={18} />
-                </span>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errors.password)
-                      setErrors((prev) => ({ ...prev, password: undefined }));
-                  }}
-                  className={`input ${errors.password ? 'error' : ''}`}
-                  placeholder="비밀번호를 입력하세요"
-                  disabled={isLoading}
-                />
+            {/* 로그인 폼 */}
+            <form onSubmit={handleSubmit} className="login-form">
+              {/* 이메일 필드 */}
+              <div className="form-group">
+                <label htmlFor="email" className="label">
+                  이메일 <span className="required">*</span>
+                </label>
+                <div className="input-wrapper">
+                  <span className="input-icon">
+                    <EnvelopeOpenIcon width={18} height={18} />
+                  </span>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (errors.email)
+                        setErrors((prev) => ({ ...prev, email: undefined }));
+                    }}
+                    className={`input ${errors.email ? 'error' : ''}`}
+                    placeholder="your@email.com"
+                    disabled={isLoading}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="error-message">{errors.email}</p>
+                )}
+              </div>
+
+              {/* 비밀번호 필드 */}
+              <div className="form-group">
+                <label htmlFor="password" className="label">
+                  비밀번호 <span className="required">*</span>
+                </label>
+                <div className="input-wrapper">
+                  <span className="input-icon">
+                    <LockClosedIcon width={18} height={18} />
+                  </span>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (errors.password)
+                        setErrors((prev) => ({ ...prev, password: undefined }));
+                    }}
+                    className={`input ${errors.password ? 'error' : ''}`}
+                    placeholder="비밀번호를 입력하세요"
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeClosedIcon width={18} height={18} />
+                    ) : (
+                      <EyeOpenIcon width={18} height={18} />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="error-message">{errors.password}</p>
+                )}
+              </div>
+
+              {/* 기억하기 & 비밀번호 찾기 */}
+              <div className="remember-forgot">
+                <div className="remember-me">
+                  <Checkbox.Root
+                    checked={rememberMe}
+                    onCheckedChange={setRememberMe}
+                    className="checkbox"
+                    id="remember"
+                  >
+                    <Checkbox.Indicator>✓</Checkbox.Indicator>
+                  </Checkbox.Root>
+                  <label htmlFor="remember" className="checkbox-label">
+                    로그인 상태 유지
+                  </label>
+                </div>
+
                 <button
                   type="button"
-                  className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  disabled={isLoading}
+                  onClick={() => setShowForgotDialog(true)}
+                  className="forgot-password"
                 >
-                  {showPassword ? (
-                    <EyeClosedIcon width={18} height={18} />
-                  ) : (
-                    <EyeOpenIcon width={18} height={18} />
-                  )}
+                  비밀번호를 잊으셨나요?
                 </button>
               </div>
-              {errors.password && (
-                <p className="error-message">{errors.password}</p>
-              )}
+
+              {/* 로그인 버튼 */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`login-button ${isLoading ? 'loading' : ''}`}
+              >
+                <span className="button-text">
+                  {isLoading ? '로그인 중...' : '로그인'}
+                </span>
+                {isLoading && <div className="spinner"></div>}
+              </button>
+            </form>
+
+            {/* 구분선 */}
+            <div className="divider">
+              <span className="divider-text">또는</span>
             </div>
 
-            {/* 기억하기 & 비밀번호 찾기 */}
-            <div className="remember-forgot">
-              <div className="remember-me">
-                <Checkbox.Root
-                  checked={rememberMe}
-                  onCheckedChange={setRememberMe}
-                  className="checkbox"
-                  id="remember"
-                >
-                  <Checkbox.Indicator>✓</Checkbox.Indicator>
-                </Checkbox.Root>
-                <label htmlFor="remember" className="checkbox-label">
-                  로그인 상태 유지
-                </label>
-              </div>
-
+            {/* 소셜 로그인 */}
+            <div className="social-login">
               <button
                 type="button"
-                onClick={() => setShowForgotDialog(true)}
-                className="forgot-password"
+                onClick={() => handleSocialLogin('Google')}
+                className="social-button"
+                disabled={isLoading}
               >
-                비밀번호를 잊으셨나요?
+                <span className="social-icon">
+                  <GlobeIcon width={18} height={18} />
+                </span>
+                Google
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('Kakao')}
+                className="social-button kakao-button"
+                disabled={isLoading}
+              >
+                카카오 로그인
               </button>
             </div>
 
-            {/* 로그인 버튼 */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`login-button ${isLoading ? 'loading' : ''}`}
-            >
-              <span className="button-text">
-                {isLoading ? '로그인 중...' : '로그인'}
-              </span>
-              {isLoading && <div className="spinner"></div>}
-            </button>
-          </form>
-
-          {/* 구분선 */}
-          <div className="divider">
-            <span className="divider-text">또는</span>
+            {/* 푸터 */}
+            <div className="footer">
+              <p className="footer-text">
+                계정이 없으신가요?{' '}
+                <button
+                  onClick={() => setShowRegister(true)}
+                  className="signup-link"
+                >
+                  회원가입
+                </button>
+              </p>
+            </div>
           </div>
-
-          {/* 소셜 로그인 */}
-          <div className="social-login">
-            <button
-              type="button"
-              onClick={() => handleSocialLogin('Google')}
-              className="social-button"
-              disabled={isLoading}
-            >
-              <span className="social-icon">
-                <GlobeIcon width={18} height={18} />
-              </span>
-              Google
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSocialLogin('Kakao')}
-              className="social-button kakao-button"
-              disabled={isLoading}
-            >
-              카카오 로그인
-            </button>
-          </div>
-
-          {/* 푸터 */}
-          <div className="footer">
-            <p className="footer-text">
-              계정이 없으신가요?{' '}
-              <a href="/register" className="signup-link">
-                회원가입
-              </a>
-            </p>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* 비밀번호 재설정 다이얼로그 */}
